@@ -1,9 +1,9 @@
 
 use std::env;
-use actix_web::{get, App, HttpResponse, HttpRequest, HttpServer, Responder, web::head};
+use actix_web::{get, App, HttpResponse, HttpRequest, HttpServer, Responder, http::header::ContentType};
 
 // [ ] GET /ping = return headers Content-type: json
-// [ ] else empty 404 (content length 0)
+// [X] else empty 404 (content length 0)
 // [X] listen port = env(PING_LISTEN_PORT) if exist else 8080
 
 
@@ -20,11 +20,18 @@ fn get_port() -> u16 {
 #[get("/ping")]
 async fn ping(request: HttpRequest) -> impl Responder {
     let headers = request.headers();
+    let mut response_content: String = "{".to_owned();
+
     for header in headers {
-        println!("Header: {}, {:?}", header.0, header.1);
+        response_content.push_str(format!("'{}': {:?}, ", header.0, header.1).as_str());
     }
 
-    HttpResponse::Ok().body("Hello world!")
+    response_content.pop();
+    response_content.pop();
+
+    response_content.push_str("}");
+
+    HttpResponse::Ok().insert_header(ContentType::json()).body(response_content)
 }
 
 #[actix_web::main]
