@@ -2,7 +2,7 @@
 use std::env;
 use actix_web::{get, App, HttpResponse, HttpRequest, HttpServer, Responder, http::header::ContentType};
 
-// [ ] GET /ping = return headers Content-type: json
+// [X] GET /ping = return headers Content-type: json
 // [X] else empty 404 (content length 0)
 // [X] listen port = env(PING_LISTEN_PORT) if exist else 8080
 
