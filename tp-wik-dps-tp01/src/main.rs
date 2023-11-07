@@ -22,12 +22,13 @@ async fn ping(request: HttpRequest) -> impl Responder {
     let headers = request.headers();
     let mut response_content: String = "{".to_owned();
 
-    for header in headers {
-        response_content.push_str(format!("'{}': {:?}, ", header.0, header.1).as_str());
+    for (index, header) in headers.iter().enumerate() {
+        let mut current_header_object = format!("'{}': {:?}", header.0, header.1);
+        if index != headers.len() - 1 {
+            current_header_object.push_str(", ");
+        }
+        response_content.push_str(current_header_object.as_str());
     }
-
-    response_content.pop();
-    response_content.pop();
 
     response_content.push_str("}");
 
