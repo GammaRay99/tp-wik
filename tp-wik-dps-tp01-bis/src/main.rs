@@ -80,8 +80,8 @@ fn handle_client(mut stream: TcpStream) {
 
 fn main() -> std::io::Result<()> {
     let port = get_port();
-    println!("Starting server on  127.0.0.1:{}", port);
-    let listener = TcpListener::bind(format!("127.0.0.1:{}", port))?;
+    println!("Starting server on  0.0.0.0:{}", port);
+    let listener = TcpListener::bind(format!("0.0.0.0:{}", port))?;
 
     for stream in listener.incoming() {
         let stream = stream.unwrap();

@@ -33,19 +33,19 @@ async fn ping(request: HttpRequest) -> impl Responder {
     response_content.push_str("}");
 
     HttpResponse::Ok().insert_header(ContentType::json()).body(response_content)
-}
+
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let port = get_port();
     
-    println!("Starting server on  127.0.0.1:{}", port);
+    println!("Starting server on  0.0.0.0:{}", port);
 
     HttpServer::new(|| {
             App::new()
                 .service(ping)
         })
-        .bind(("127.0.0.1", port))?
+        .bind(("0.0.0.0", port))?
         .run()
         .await
 }
