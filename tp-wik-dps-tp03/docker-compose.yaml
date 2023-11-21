@@ -1,0 +1,37 @@
+version: "3.8"
+
+
+services:
+    rapi:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        
+        restart: unless-stopped
+
+        deploy:
+            replicas: 4
+        
+        networks:
+            - api_front
+
+    reverse_proxy:
+        image: nginx:latest
+        container_name: nginx_rp
+        restart: unless-stopped
+        
+        ports:
+            - 80:80
+        
+        volumes:
+            - ./nginx/conf/:/etc/nginx/conf.d/:ro
+        
+        networks:
+            - api_front
+        
+        depends_on:
+            - rapi
+
+networks:
+    api_front:
+
