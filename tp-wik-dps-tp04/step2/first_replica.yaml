@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: echo-web-replica  # name of replica
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: echo-web-pod
+  template:
+    metadata:
+      labels:
+        app: echo-web-pod
+    spec:
+      containers:
+      - name: echo-web-app
+        image: registry.cluster.wik.cloud/public/echo
+        ports:
+        - containerPort: 8080

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-app-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: echo-web-pod
+  template:
+    metadata:
+      labels:
+        app: echo-web-pod
+    spec:
+      containers:
+      - name: echo-web-app-test
+        image: registry.cluster.wik.cloud/public/echo
+        ports:
+        - containerPort: 8080
